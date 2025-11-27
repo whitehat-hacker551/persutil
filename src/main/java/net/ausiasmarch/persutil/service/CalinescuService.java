@@ -70,16 +70,45 @@ public Long rellenaListaCompra(Long numProductos) {
         return id;
     }
 
-    public Page<CalinescuEntity> getPage(Pageable oPageable) {
+    public Page<CalinescuEntity> getPage(Pageable oPageable, Boolean publicado) {
+        if (publicado != null) {
+            // Filtrar manualmente la lista completa y crear una sublista paginada
+            var todasLasEntidades = oCalinescuRepository.findAll();
+            var filtradas = todasLasEntidades.stream()
+                    .filter(item -> item.isPublicado() == publicado)
+                    .toList();
+            
+            // Calcular paginación manual
+            int start = (int) oPageable.getOffset();
+            int end = Math.min((start + oPageable.getPageSize()), filtradas.size());
+            
+            if (start > filtradas.size()) {
+                start = 0;
+                end = Math.min(oPageable.getPageSize(), filtradas.size());
+            }
+            
+            var paginaActual = filtradas.subList(start, end);
+            return new org.springframework.data.domain.PageImpl<>(
+                paginaActual, 
+                oPageable, 
+                filtradas.size()
+            );
+        }
         return oCalinescuRepository.findAll(oPageable);
     }
 
-    public Long count() {
+    public Long count(Boolean publicado) {
+        if (publicado != null) {
+            return oCalinescuRepository.findAll().stream()
+                    .filter(item -> item.isPublicado() == publicado)
+                    .count();
+        }
         return oCalinescuRepository.count();
     }
 
-    public Double calcularTotalPrecios() {
+    public Double calcularTotalPrecios(Boolean publicado) {
         return oCalinescuRepository.findAll().stream()
+                .filter(item -> publicado == null || item.isPublicado() == publicado)
                 .mapToDouble(item -> {
                     Double precio = item.getPrecio() != null ? item.getPrecio() : 0.0;
                     Integer cantidad = item.getCantidad() != null ? item.getCantidad() : 1;

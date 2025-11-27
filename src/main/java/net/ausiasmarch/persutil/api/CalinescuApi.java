@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.persutil.entity.CalinescuEntity;
@@ -65,19 +66,21 @@ CalinescuService oCalinescuService;
 
     // listado paginado de posts
     @GetMapping("")
-    public ResponseEntity<Page<CalinescuEntity>> getPage(Pageable oPageable) {
-        return ResponseEntity.ok(oCalinescuService.getPage(oPageable));
+    public ResponseEntity<Page<CalinescuEntity>> getPage(
+            Pageable oPageable,
+            @RequestParam(required = false) Boolean publicado) {
+        return ResponseEntity.ok(oCalinescuService.getPage(oPageable, publicado));
         
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Long> count() {
-        return ResponseEntity.ok(oCalinescuService.count()); 
+    public ResponseEntity<Long> count(@RequestParam(required = false) Boolean publicado) {
+        return ResponseEntity.ok(oCalinescuService.count(publicado)); 
     }
 
     @GetMapping("/total")
-    public ResponseEntity<Double> calcularTotalPrecios() {
-        return ResponseEntity.ok(oCalinescuService.calcularTotalPrecios());
+    public ResponseEntity<Double> calcularTotalPrecios(@RequestParam(required = false) Boolean publicado) {
+        return ResponseEntity.ok(oCalinescuService.calcularTotalPrecios(publicado));
     }
 
     @DeleteMapping("/all")
