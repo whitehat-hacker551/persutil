@@ -59,6 +59,7 @@ public Long rellenaListaCompra(Long numProductos) {
         existingListaCompra.setFecha_compra_esperada(calinescuEntity.getFecha_compra_esperada());
         existingListaCompra.setPublicado(calinescuEntity.isPublicado());
         existingListaCompra.setPrecio(calinescuEntity.getPrecio());
+        existingListaCompra.setCantidad(calinescuEntity.getCantidad());
         existingListaCompra.setFecha_modificacion(LocalDateTime.now());
         oCalinescuRepository.save(existingListaCompra);
         return existingListaCompra.getId();
@@ -79,7 +80,11 @@ public Long rellenaListaCompra(Long numProductos) {
 
     public Double calcularTotalPrecios() {
         return oCalinescuRepository.findAll().stream()
-                .mapToDouble(item -> item.getPrecio() != null ? item.getPrecio() : 0.0)
+                .mapToDouble(item -> {
+                    Double precio = item.getPrecio() != null ? item.getPrecio() : 0.0;
+                    Integer cantidad = item.getCantidad() != null ? item.getCantidad() : 1;
+                    return precio * cantidad;
+                })
                 .sum();
     }
 

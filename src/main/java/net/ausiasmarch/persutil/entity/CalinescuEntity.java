@@ -60,4 +60,7 @@ public class CalinescuEntity {
     @Nullable
     private Double precio = 0.0;
 
+    @NotNull
+    private Integer cantidad = 1;
+
 }
