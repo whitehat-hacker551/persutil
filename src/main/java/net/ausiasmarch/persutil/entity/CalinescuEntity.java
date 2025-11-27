@@ -57,4 +57,7 @@ public class CalinescuEntity {
     @NotNull
     private boolean publicado=true;
 
+    @Nullable
+    private Double precio = 0.0;
+
 }

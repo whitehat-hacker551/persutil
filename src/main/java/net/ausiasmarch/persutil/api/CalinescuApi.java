@@ -75,4 +75,14 @@ CalinescuService oCalinescuService;
         return ResponseEntity.ok(oCalinescuService.count()); 
     }
 
+    @GetMapping("/total")
+    public ResponseEntity<Double> calcularTotalPrecios() {
+        return ResponseEntity.ok(oCalinescuService.calcularTotalPrecios());
+    }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<Long> deleteAll() {
+        return ResponseEntity.ok(oCalinescuService.deleteAll());
+    }
+
 }
