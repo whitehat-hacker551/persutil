@@ -100,6 +100,26 @@ CREATE TABLE `castanyera` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `contreras`
+--
+
+CREATE TABLE `contreras` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(1024) COLLATE utf32_unicode_ci NOT NULL,
+  `contenido` longtext COLLATE utf32_unicode_ci NOT NULL,
+  `etiquetas` varchar(1024) COLLATE utf32_unicode_ci NOT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `publico` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB 
+  AUTO_INCREMENT=9
+  DEFAULT CHARSET=utf32 
+  COLLATE=utf32_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `frasesmotivacionales`
 --
 
