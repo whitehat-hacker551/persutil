@@ -47,6 +47,30 @@ CREATE TABLE `blog` (
   `fecha_modificacion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
+
+
+--
+-- Estructura tabla pallas(notas)
+--
+
+CREATE TABLE `pallas` (
+  `id` bigint NOT NULL,
+  `titulo` varchar(100) DEFAULT NULL,
+  `contenido` longtext,
+  `fecha_creacion` datetime NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `publicado` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Índices de la tabla `pallas`
+
+ALTER TABLE `pallas`
+  ADD PRIMARY KEY (`id`);
+
+--AUTO_INCREMENT de la tabla `pallas`
+ALTER TABLE `pallas`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+COMMIT;
 -- --------------------------------------------------------
 
 --
