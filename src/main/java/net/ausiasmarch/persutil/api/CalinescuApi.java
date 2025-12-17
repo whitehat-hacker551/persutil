@@ -68,14 +68,15 @@ CalinescuService oCalinescuService;
     @GetMapping("")
     public ResponseEntity<Page<CalinescuEntity>> getPage(
             Pageable oPageable,
-            @RequestParam(required = false) Boolean publicado) {
-        return ResponseEntity.ok(oCalinescuService.getPage(oPageable, publicado));
+            @RequestParam(required = false) Boolean publicado,
+            @RequestParam(required = false) String filter) {
+        return ResponseEntity.ok(oCalinescuService.getPage(oPageable, publicado, filter));
         
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Long> count(@RequestParam(required = false) Boolean publicado) {
-        return ResponseEntity.ok(oCalinescuService.count(publicado)); 
+    public ResponseEntity<Long> count(@RequestParam(required = false) Boolean publicado, @RequestParam(required = false) String filter) {
+        return ResponseEntity.ok(oCalinescuService.count(publicado, filter)); 
     }
 
     @GetMapping("/total")
@@ -86,6 +87,16 @@ CalinescuService oCalinescuService;
     @DeleteMapping("/all")
     public ResponseEntity<Long> deleteAll() {
         return ResponseEntity.ok(oCalinescuService.deleteAll());
+    }
+
+    @PostMapping("/publicar/{id}")
+    public ResponseEntity<Long> publicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oCalinescuService.publicar(id));
+    }
+
+    @PostMapping("/despublicar/{id}")
+    public ResponseEntity<Long> despublicar(@PathVariable Long id) {
+        return ResponseEntity.ok(oCalinescuService.despublicar(id));
     }
 
 }
